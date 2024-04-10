@@ -42,9 +42,3 @@ To solve a Sudoku puzzle using A* Search algorithm, the command would be:
 
 - For Iterative Deepening Search (IDS), the program will display the value of the limit (`lim`) reached during the search process.
 - Ensure that the Sudoku configuration is provided correctly, with '0' representing empty cells.
-
-php
-Copy code
-./solver <algorithm> <sudoku_config>
-<algorithm>: Choose one of the following algorithms to solve the Sudoku puzzle: B for BFS, I for IDS, U for UCS, A for A_STAR, or G for GBFS.
-<sudoku_config>: Specify the Sudoku configuration as a string of 81 characters representing the puzzle, with '0' indicating empty cells.
