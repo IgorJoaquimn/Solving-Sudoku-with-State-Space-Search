@@ -12,8 +12,6 @@ public:
     // Constructor
     UCS(State* initial_state) : Search_Base(initial_state) {
         pq.push(initial_state);
-        this->lim = 1;
-        this->max_lim = 1;
     }
 
     State* get_next_state() override {

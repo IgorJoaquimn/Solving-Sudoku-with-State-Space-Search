@@ -1,5 +1,4 @@
 #include <string>
-#include "state.h"     
 #include "BFS.h"
 #include "IDS.h"
 #include "UCS.h"
@@ -57,13 +56,13 @@ int main(int argc, char *argv[])
             return 1;
     }
     
-    State * result = search->search();
+    State result = search->search();
 
     for (int i = 0; i < N; ++i)
     {
         for (int j = 0; j < N; ++j)
         {
-            std::cout << char(result->state[i][j] + '0') << " ";
+            std::cout << char(result.state[i][j] + '0') << " ";
         }
         std::cout << std::endl;
     }

@@ -7,6 +7,8 @@ State::State(const State &otherState)
     for (int i = 0; i < N; ++i)
         for (int j = 0; j < N; ++j)
             state[i][j] = otherState.state[i][j];
+    
+    cost = otherState.cost;
 }
 
 // Default constructor
@@ -16,6 +18,62 @@ State::State()
     for (int i = 0; i < N; ++i)
         for (int j = 0; j < N; ++j)
             state[i][j] = 0;
+}
+
+// Assignment operator
+State& State::operator=(const State& otherState) {
+    // Check for self-assignment
+    if (this == &otherState) {
+        return *this;
+    }
+    
+    // Copy the state matrix from the otherState
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            state[i][j] = otherState.state[i][j];
+        }
+    }
+    // Copy the cost
+    cost = otherState.cost;
+
+    // Return *this to allow chaining of assignment
+    return *this;
+}
+
+// Copy constructor with a pointer to another State object
+State::State(const State *otherStatePtr) {
+    if (otherStatePtr != nullptr) {
+        // Copy the state matrix from the other State object
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                state[i][j] = otherStatePtr->state[i][j];
+            }
+        }
+        // Copy the cost
+        cost = otherStatePtr->cost;
+    }
+}
+
+// Assignment operator with a pointer to another State object
+State& State::operator=(const State *otherStatePtr) {
+    // Check for self-assignment
+    if (this == otherStatePtr) {
+        return *this;
+    }
+
+    if (otherStatePtr != nullptr) {
+        // Copy the state matrix from the other State object
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                state[i][j] = otherStatePtr->state[i][j];
+            }
+        }
+        // Copy the cost
+        cost = otherStatePtr->cost;
+    }
+    
+    // Return *this to allow chaining of assignment
+    return *this;
 }
 
 // Function to find the (i,j) of the first zero in the matrix

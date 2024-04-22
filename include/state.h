@@ -17,7 +17,12 @@ public:
     State();
 
     // Constructor with another State object as argument
-    State(const State& otherState);
+    State(const State& otherState); 
+    State(const State* otherState); 
+
+    // Assignment operator
+    State& operator=(const State& otherState);
+    State& operator=(const State* otherState);
 
     // Function to find the (i,j) of the first zero in the matrix
     std::pair<int, int> find_free() const;
