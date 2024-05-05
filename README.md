@@ -42,3 +42,5 @@ To solve a Sudoku puzzle using A* Search algorithm, the command would be:
 
 - For Iterative Deepening Search (IDS), the program will display the value of the limit (`lim`) reached during the search process.
 - Ensure that the Sudoku configuration is provided correctly, with '0' representing empty cells.
+- Thanks for the instances: 
+  - [1] Mantere, Timo and Janne Koljonen (2008). Solving and Analyzing Sudokus with Cultural Algorithms. In Proceedings of 2008 IEEE World Congress on Computational Intelligence (WCCI 2008), 1-6 June, Hong Kong, China, pages 4054-4061

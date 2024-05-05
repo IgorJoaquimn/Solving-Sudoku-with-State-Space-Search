@@ -11,8 +11,13 @@ private:
 public:
     // Constructor
     BFS(State* initial_state) : Search_Base(initial_state) {
-        q.push(initial_state);
+        // q.push(initial_state);
     }
+    
+    bool exists_next() override
+    {
+        return q.size() != 0;
+    };
 
     State* get_next_state() override
     {

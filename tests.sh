@@ -1,63 +1,69 @@
 #!/bin/bash
-
-# Define directories for tests and executable
-BIN_DIR="./bin"
-TEST_EXEC="$BIN_DIR/TP1.out"
+TEST_DIR="./tests/sudokus"
 
 # Define the algorithms
 ALGORITHMS=("A" "U" "B" "G" "I")
 
-# Define the Sudoku puzzles as space-separated strings
-# Format each puzzle as a single line string
-SUDOKU_PUZZLES=(
-    # Sudoku 1 - Intermediário
-    "530070000 600195000 098000060 800060003 400803001 700020006 060000280 000419005 000080079"
-    # Sudoku 2 - Difícil
-    "800000000 003600000 070090200 050007000 000045700 000100030 001000068 008500010 090000400"
-    # Sudoku 3 - Intermediário
-    "800700000 003600005 070090200 050007090 000045700 000100034 001000068 008500010 090000400"
-    # Add more puzzles here as needed
-    # "869752341 423618579 175493286 354867192 600045700 000100030 001000068 008500010 090000400"
-    
-    "123456789 987321654 000000000 000000000 000000000 000000000 000000000 000000000 000000000"
-    )
+# Number of times to repeat each test
 
-# Function to run tests and print execution time and program details
+# Check if the -q flag is present in the command line arguments
+quiet_mode=false
+for arg in "$@"; do
+    if [[ $arg == "-q" ]]; then
+        quiet_mode=true
+        break
+    fi
+done
+
+# Function to run tests and store execution time in a folder
 run_test() {
+    BIN_DIR="./bin"
+    TEST_EXEC="$BIN_DIR/TP1.out"
+    RESULTS_DIR="./tests/results/"
+    NUM_REPETITIONS=30
+
+    
     local algorithm="$1"
-    local puzzle="$2"
-    local puzzle_index="$3"
-
-    # Construct the command line for running the program
-    local command_line="$TEST_EXEC $algorithm $puzzle"
+    local puzzle_file="$2"
     
-    # Echo the program being run and its input
-    echo "Running command: $command_line"
-    # Start measuring the time
-    local start_time=$(date +%s%3N)
+    # Read the puzzle from the file
+    local puzzle=$(<"$puzzle_file")
 
-    # Run the program and capture its output
-    output=$(eval "$command_line")
+    # Repeat the test multiple times
+    for i in $(seq 1 $NUM_REPETITIONS); do
+        # Construct the command line for running the program
+        local command_line="$TEST_EXEC $algorithm $puzzle"
+        
+        # Start measuring the time
+        local start_time=$(date +%s%3N)
+        # Run the program
+        output=$(eval "$command_line")
+        # Calculate the elapsed time
+        local end_time=$(date +%s%3N)
+        local elapsed_time=$((end_time - start_time))
 
-    # Calculate the elapsed time
-    local end_time=$(date +%s%3N)
-    local elapsed_time=$((end_time - start_time))
+        echo "$puzzle_file $algorithm $i $elapsed_time"
 
-    # Print the execution time
-    echo "Execution time for $algorithm on Sudoku Puzzle $((puzzle_index + 1)): $elapsed_time ms"
-    
-    # Print the program output
-    echo "$output"
-    echo
+        # Create directory for algorithm if it doesn't exist
+        mkdir -p $RESULTS_DIR
+        
+        # Create a file path to store the execution time in CSV format
+        local csv_file="$RESULTS_DIR/$(basename "$puzzle_file" .txt).csv"
+       
+        # Check if the CSV file exists, and if not, create it with a header
+        if [[ ! -f "$csv_file" ]]; then
+            echo "algorithm,puzzle_file,execution_time_ms,states_expanded" > "$csv_file"
+        fi
+
+        # Append the execution time, algorithm, and puzzle file to the CSV file
+        echo "$algorithm,$puzzle_file,$elapsed_time,$output" >> "$csv_file"
+    done
 }
 
-# Run the tests for each algorithm and each puzzle
+# Export the function so it can be used by GNU parallel
+export -f run_test
+
+# Run the tests for each algorithm in parallel
 for algorithm in "${ALGORITHMS[@]}"; do
-    for index in "${!SUDOKU_PUZZLES[@]}"; do
-        # Get the puzzle at the current index
-        puzzle="${SUDOKU_PUZZLES[$index]}"
-        
-        # Run the test
-        run_test "$algorithm" "$puzzle" "$index"
-    done
+    find "$TEST_DIR" -type f -name "*.txt" | parallel -j 6 run_test "$algorithm" {}
 done

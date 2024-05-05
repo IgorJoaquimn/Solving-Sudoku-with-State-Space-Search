@@ -11,10 +11,14 @@ private:
 public:
     // Constructor
     IDS(State* initial_state) : Search_Base(initial_state) {
-        s.push(initial_state);
-        this->lim = 1;
+        // s.push(initial_state);
         this->max_lim = 1;
     }
+
+    bool exists_next() override
+    {
+        return s.size() != 0;
+    };
 
     State* get_next_state() override {
         auto t = s.top();
@@ -24,6 +28,8 @@ public:
 
     void update_tree(std::vector<State*> states) override {
         for (State* state : states) {
+            if(state->path_cost > this->max_lim)
+                break;
             s.push(state); // Push each pointer to the stack
         }
     }
@@ -33,6 +39,7 @@ public:
             delete s.top();
             s.pop();
         }
+        initial_state = new State(*initial_state_copy);
         s.push(new State(*initial_state_copy));
     }
 

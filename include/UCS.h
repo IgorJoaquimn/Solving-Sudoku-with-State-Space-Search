@@ -6,13 +6,18 @@
 
 class UCS : public Search_Base {
 private:
-    std::priority_queue<State*> pq;
+    std::priority_queue<State*, std::vector<State*>, StateComparator> pq;
 
 public:
     // Constructor
     UCS(State* initial_state) : Search_Base(initial_state) {
-        pq.push(initial_state);
+        // pq.push(initial_state);
     }
+
+    bool exists_next() override
+    {
+        return pq.size() != 0;
+    };
 
     State* get_next_state() override {
         auto t = pq.top();
@@ -32,7 +37,7 @@ public:
     }
 
     virtual int g(State* state) {
-        return state->cost;
+        return state->path_cost;
     }
 
     virtual int h(State* state) {
