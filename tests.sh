@@ -18,7 +18,7 @@ done
 # Function to run tests and store execution time in a folder
 run_test() {
     BIN_DIR="./bin"
-    TEST_EXEC="$BIN_DIR/TP1.out"
+    TEST_EXEC="$BIN_DIR/TP1"
     RESULTS_DIR="./tests/results/"
     NUM_REPETITIONS=30
 

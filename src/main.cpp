@@ -74,11 +74,6 @@ int main(int argc, char *argv[])
         std::cout  << " ";
     }
     std::cout  << std::endl;
-
-    // if (algorithm[0] == 'I')
-        // std::cout << "lim: " << search->max_lim << std::endl;
-    
-
     delete search;
     return 0;
 }

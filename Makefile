@@ -33,7 +33,7 @@ OUTPUT = ../output
 
 # all sources, objs, and header files
 MAIN = Main
-TARGET = TP1.out
+TARGET = TP1
 SRC = $(wildcard $(SRC_FOLDER)*.cpp)
 OBJ = $(patsubst $(SRC_FOLDER)%.cpp, $(OBJ_FOLDER)%.o, $(SRC))
 

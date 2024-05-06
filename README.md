@@ -10,7 +10,7 @@ This project implements a Sudoku solver using various state space search algorit
 
 To run the program, use the following command-line format:
 ```
-./TP1.out <algorithm> <sudoku_config>
+./TP1 <algorithm> <sudoku_config>
 ```
 
 - `<algorithm>`: Choose one of the following algorithms to solve the Sudoku puzzle:
@@ -35,7 +35,7 @@ Ensure that your system meets the following requirements for compiling the progr
 
 To solve a Sudoku puzzle using A* Search algorithm, the command would be:
 ```
-`./TP1.out A 107006450 025340008 060001070 053000029 610009800 000602007 001093200 008000000 040078591`
+`./TP1 A 107006450 025340008 060001070 053000029 610009800 000602007 001093200 008000000 040078591`
 ```
 
 ### Notes
