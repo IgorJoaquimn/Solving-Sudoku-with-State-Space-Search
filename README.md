@@ -35,7 +35,7 @@ Ensure that your system meets the following requirements for compiling the progr
 
 To solve a Sudoku puzzle using A* Search algorithm, the command would be:
 ```
-`./solver A 107006450 025340008 060001070 053000029 610009800 000602007 001093200 008000000 040078591`
+`./TP01.out A 107006450 025340008 060001070 053000029 610009800 000602007 001093200 008000000 040078591`
 ```
 
 ### Notes
